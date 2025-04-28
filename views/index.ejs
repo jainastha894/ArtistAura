@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Artists</title>
+    <style>/* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            background: linear-gradient(135deg, #8e2de2, #ff6ec4);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Upper Section */
+        #upper {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+        
+        #upper h1 {
+            margin-bottom: 20px;
+        }
+        
+        .artist-form {
+            margin-top: 20px;
+        }
+        
+        .artist-form input[type="text"] {
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            margin-left: 10px;
+            width: 250px;
+        }
+        
+        .artist-form button {
+            padding: 12px 25px;
+            margin-left: 15px;
+            background-color: #ffffff;
+            color: #8e2de2;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .artist-form button:hover {
+            background-color: #ff6ec4;
+            color: #ffffff;
+        }
+        
+        /* Trending text */
+        .trending-text {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        /* Tracks Section */
+        .tracks {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .track-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .track-card:hover {
+            transform: scale(1.05);
+        }
+        
+        /* CSS particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .particles::before,
+        .particles::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(white 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.1;
+            animation: moveParticles 60s linear infinite;
+        }
+        
+        .particles::after {
+            background-size: 40px 40px;
+            animation-direction: reverse;
+        }
+        
+        @keyframes moveParticles {
+            from {
+                transform: translate(0, 0);
+            }
+            to {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .submit{
+            margin: 10px;
+            border: none;
+            background-color: burlywood;
+            color: rgb(12, 12, 12);
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            height: 30px;
+            width: 150px;
+            font-size: x-large;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="upper">
+    <h1>Here you will find top albums of your favourite artists.</h1>
+    <form action="/submit" method="post">
+    <label>Enter the name of your favourite artist:  <input name="artist" type="text"></label>
+    <br>
+    <input class="submit" type="submit">
+
+</form>
+</div>
+<% if (error) { %>
+    <p class="error-text"><%= error %></p>
+<% } %>
+
+<% if (result && result.length > 0) { %>
+   
+<p>The artist you chose is top trending!</p>
+
+<div class="tracks">
+
+<% result.forEach(track => {%>
+  
+        <div class="track-card">
+            <p>
+            <%= track.name %></p>
+        </div>
+    </div>
+    <%}); %>
+</div>
+    <% } %>
+</div>
+<div class="particles"></div>
+
+</body>
+</html>
